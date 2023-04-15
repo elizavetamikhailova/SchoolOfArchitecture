@@ -10,8 +10,6 @@ namespace Conferences {
         place: Place
         lectures: Lecture []
     }
-   
-    Conference "many" *-- "many" Place 
 
     class Speaker {
         id: Int
@@ -36,8 +34,6 @@ namespace Conferences {
         user: User
         conference: Conference
     }
-    Feedback "many" o-- "1" Conference
-
 }
 
 namespace Lectures {
@@ -47,27 +43,21 @@ namespace Lectures {
         title: String
         url: YoutubeUrl
     }
-    Lecture "1" *-- "1" YoutubeUrl
-    Conferences.Conference "many" *-- "many" Lecture : ref
-    Conferences.Speaker "1" *-- "many" Lecture : ref
 
     class Feedback {
         user: User
         lecture: Lecture
     }
-    Feedback "many" o-- "1" Lecture
     
     class Schedule {
         timeslots: Timeslot []
     }
-    Schedule "1" *-- "many" Timeslot
 
     class Timeslot {
         id: String
         date: Date
         lecture: Lecture
     }
-    Timeslot "1" *-- "1" Lecture
 
     class YoutubeUrl {
         url: String
@@ -83,18 +73,12 @@ namespace Registration {
         lastName: String
         email: String
     }
-
-    Conferences.Speaker "1" o-- "1" User : ref
-    Conferences.Listener "1" o-- "1" User
-    Conferences.Feedback "many" o-- "1" User
-    Lectures.Feedback "many" o-- "1" User
     
     class Ticket {
         id: Int
         date: Date
         ownerEmail: String
     }
-    Conferences.Listener "1" *-- "many" Ticket : ref
 
     class SpeakerRequest {
         id: Int
@@ -109,12 +93,24 @@ namespace Content {
     class UpcomingConferenceInfo {
         conference: Conference
     }
-    UpcomingConferenceInfo "1" o-- "1" Conference
-
 
     class InformationAboutPastConferences {
         conferences: Conference []
     }
-    InformationAboutPastConferences "1" o-- "many" Conference
-
 }
+
+Conference "many" *-- "many" Place 
+Conferences.Feedback "many" o-- "1" Conference
+Lecture "1" *-- "1" YoutubeUrl
+Conferences.Conference "many" *-- "many" Lecture : ref
+Conferences.Speaker "1" *-- "many" Lecture : ref
+Lectures.Feedback "many" o-- "1" Lecture
+Schedule "1" *-- "many" Timeslot
+Timeslot "1" *-- "1" Lecture
+Conferences.Speaker "1" o-- "1" User : ref
+Conferences.Listener "1" o-- "1" User
+Conferences.Feedback "many" o-- "1" User
+Lectures.Feedback "many" o-- "1" User
+Conferences.Listener "1" *-- "many" Ticket : ref
+UpcomingConferenceInfo "1" o-- "1" Conference
+InformationAboutPastConferences "1" o-- "many" Conference
