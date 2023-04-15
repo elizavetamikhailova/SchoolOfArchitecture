@@ -76,6 +76,9 @@ namespace ShoppingCart {
  ShoppingCart *-- "1" Customer
 }
 
+
+
+
 namespace Ordering {
  ProductOrder *-- OrderItem
  OrderItem *-- Product
