@@ -10,7 +10,7 @@ namespace Conferences {
         place: Place
         lectures: Lecture []
     }
-    Conference "many" *-- "many" Lecture
+   
     Conference "many" *-- "many" Place 
 
     class Speaker {
@@ -19,16 +19,12 @@ namespace Conferences {
         occupation: String
         lectures: Lecture []
     }
-    Speaker "1" *-- "many" Lecture
-    Speaker "1" o-- "1" User
 
     class Listener {
         id: Int
         user: User
         tickets: Ticket []
     }
-    Listener "1" o-- "1" User
-    Listener "1" *-- "many" User
 
     class Place {
         id: Int
@@ -40,11 +36,9 @@ namespace Conferences {
         user: User
         conference: Conference
     }
-    Feedback "many" o-- "1" User
     Feedback "many" o-- "1" Conference
 
 }
-
 
 namespace Lectures {
 
@@ -54,12 +48,13 @@ namespace Lectures {
         url: YoutubeUrl
     }
     Lecture "1" *-- "1" YoutubeUrl
+    Conferences.Conference "many" *-- "many" Lecture : ref
+    Conferences.Speaker "1" *-- "many" Lecture : ref
 
     class Feedback {
         user: User
         lecture: Lecture
     }
-    Feedback "many" o-- "1" User
     Feedback "many" o-- "1" Lecture
     
     class Schedule {
@@ -88,12 +83,18 @@ namespace Registration {
         lastName: String
         email: String
     }
+
+    Conferences.Speaker "1" o-- "1" User : ref
+    Conferences.Listener "1" o-- "1" User
+    Conferences.Feedback "many" o-- "1" User
+    Lectures.Feedback "many" o-- "1" User
     
     class Ticket {
         id: Int
         date: Date
         ownerEmail: String
     }
+    Conferences.Listener "1" *-- "many" Ticket : ref
 
     class SpeakerRequest {
         id: Int
@@ -117,4 +118,3 @@ namespace Content {
     InformationAboutPastConferences "1" o-- "many" Conference
 
 }
-
