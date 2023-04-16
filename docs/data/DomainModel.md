@@ -41,6 +41,7 @@ namespace Lectures {
     class Lecture {
         id: Int
         title: String
+        description: String
         url: YoutubeUrl
     }
 
@@ -62,16 +63,20 @@ namespace Lectures {
     class YoutubeUrl {
         url: String
     }
-
 }
 
-namespace Registration {
+namespace OrganizationZone {
 
     class User {
         id: Int
         firstName: String
         lastName: String
         email: String
+    }
+
+    class Administrator {
+        id: Int
+        user: String
     }
     
     class Ticket {
@@ -85,6 +90,30 @@ namespace Registration {
         user: User
         lectureTheme: String
         aboutSpeaker: String
+    }
+}
+
+namespace Communication {
+
+    class Review {
+        id: Int
+        message: Message
+    }
+
+    class Message {
+        speakerRequest: SpeakerRequest
+        text: String
+        files: File[]
+    }
+
+    class SpeakerQuestion {
+        id: Int
+        message: Message
+    }
+
+    class Chat {
+        theme: SpeakerRequest
+        messages: Message[]
     }
 }
 
@@ -114,3 +143,9 @@ Lectures.Feedback "many" o-- "1" User
 Conferences.Listener "1" *-- "many" Ticket : ref
 UpcomingConferenceInfo "1" o-- "1" Conference
 InformationAboutPastConferences "1" o-- "many" Conference
+Review "many" o-- "1" SpeakerRequest
+SpeakerQuestion <|-- Message
+Review <|-- Message
+Message "many" o-- "1" SpeakerRequest
+Chat "1" o-- "1" SpeakerRequest
+Chat "1" o-- "many" Message
