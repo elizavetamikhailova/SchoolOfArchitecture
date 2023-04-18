@@ -50,6 +50,13 @@ namespace Lectures {
         lecture: Lecture
     }
     
+    class YoutubeUrl {
+        url: String
+    }
+}
+
+namespace Schedules {
+
     class Schedule {
         timeslots: Timeslot []
     }
@@ -58,10 +65,6 @@ namespace Lectures {
         id: String
         date: Date
         lecture: Lecture
-    }
-
-    class YoutubeUrl {
-        url: String
     }
 }
 
