@@ -1,4 +1,15 @@
 
+|Type             |Latency           |RPS          |
+|:----------------|:-----------------|:------------|
+|Without cache, 1 thread, 1 connection|4.46ms |233.09|
+|With cache, 1 thread, 1 connection|9.04ms |512.91|
+|Without cache, 10 thread, 10 connection|42.94ms |23.26|
+|With cache, 10 thread, 10 connection|14.97ms |67.42|
+|Without cache, 50 thread, 50 connection|200.20ms |3.58|
+|With cache, 50 thread, 50 connection|137.49ms |7.50|
+
+
+
 liza@DESKTOP-PKFJ2IG:~/SchoolOfArchitecture/module_06$ wrk -d 10 -t 10 -c 10 --latency -s ./get.lua http://localhost:8081/
 Running 10s test @ http://localhost:8081/
   10 threads and 10 connections
